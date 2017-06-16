@@ -1,0 +1,26 @@
+#load dataset
+
+View(titanic3)
+
+#port of embarkation- NA = S
+
+df_titanic$embarked[is.na(df_titanic$embarked)] <- "S"
+
+#age- replacing missing values using mean
+
+x <- mean(df_titanic$age, na.rm = TRUE)
+df_titanic$age[is.na(df_titanic$age)] <- x
+
+#check mean and median of the original data, and the distribution of age. if the distribution is normal and mean and median are closeby, mean is ok to substitute.
+
+#fill empty values in boat column with "NA"
+na <- as.character("NA")
+df_titanic$boat[is.na(df_titanic$boat)] <- na
+
+#create a new column has_cabin_number which has 1 if there is a cabin number, and 0 otherwise
+df_titanic <- mutate(df_titanic,has_cabin_number = ifelse(df_titanic$cabin=="","0","1"))
+
+#cabin + survived
+?
+
+write.csv(df_titanic, "titanic_clean.csv")
